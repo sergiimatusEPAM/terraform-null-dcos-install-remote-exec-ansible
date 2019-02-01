@@ -1,16 +1,24 @@
 /**
- * DC/OS Ansible based remote exec install
- * ============
+ * # DC/OS Ansible based remote exec install
+ *
  * This module installs all DC/OS node types via a set of Ansible roles, invoked
  * from an Docker image.
  *
  * ## Prerequisites
+ *
  * * Docker available on bootstrap node
  * * Access to Dockerhub. Alternatively the `mesosphere/dcos-ansible-bundle` Docker image can be made available by other means.
  * * The boostrap node is able to ssh into the other nodes, either via SSH-Agent forwarding or a statically deployed key.
  *
- * EXAMPLE
- * -------
+ * ## Re-running Ansible for upgrading or config updates
+ *
+ * ```bash
+ * terraform taint -module dcos-install null_resource.run_ansible_from_bootstrap_node_to_install_dcos
+ * terraform apply
+ * ```
+
+ * ## EXAMPLE
+ *
  * ```hcl
  *  module "dcos-install" {
  *    source = "dcos-terraform/dcos-install-remote-exec-ansible/null"
