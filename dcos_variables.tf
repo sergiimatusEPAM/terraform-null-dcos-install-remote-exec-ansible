@@ -4,7 +4,7 @@ variable "dcos_variant" {
 }
 
 variable "dcos_download_url" {
-  default =  "https://downloads.dcos.io/dcos/stable/dcos_generate_config.sh"
+  default = "https://downloads.dcos.io/dcos/stable/dcos_generate_config.sh"
 }
 
 variable "dcos_version" {
@@ -13,9 +13,7 @@ variable "dcos_version" {
 }
 
 variable "dcos_version_to_upgrade_from" {
-  default     = "1.12.0"
+  default = "1.12.0"
 }
 
-variable "dcos_config_yml" {
-
-}
+variable "dcos_config_yml" {}

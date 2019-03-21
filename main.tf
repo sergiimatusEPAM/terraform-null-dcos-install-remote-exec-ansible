@@ -44,16 +44,18 @@
  */
 
 resource "null_resource" "run_ansible_from_bootstrap_node_to_install_dcos" {
-
-
   triggers {
     # This should really be instance IDs of some sorts,
     # a recycled node (e.g. newly provisioned, but with same IP) would
     # not be detected.
     bootsrap_instance = "${var.bootstrap_private_ip}"
-    master_instances = "${join(",", var.master_private_ips)}"
+
+    master_instances         = "${join(",", var.master_private_ips)}"
     private_agents_instances = "${join(",", var.private_agent_private_ips)}"
-    public_agents_instances = "${join(",", var.public_agent_private_ips)}"
+    public_agents_instances  = "${join(",", var.public_agent_private_ips)}"
+
+    depends_on      = "${join(",",var.depends_on)}"
+    dcos_config_yml = "${var.dcos_config_yml}"
   }
 
   connection {
@@ -62,8 +64,9 @@ resource "null_resource" "run_ansible_from_bootstrap_node_to_install_dcos" {
   }
 
   provisioner "file" {
-      destination = "/tmp/mesosphere_universal_installer_inventory"
-      content = <<EOF
+    destination = "/tmp/mesosphere_universal_installer_inventory"
+
+    content = <<EOF
 [bootstraps]
 ${var.bootstrap_private_ip}
 [masters]
@@ -92,12 +95,12 @@ masters
 agents
 agents_public
 EOF
-    }
+  }
 
   provisioner "file" {
-  destination = "/tmp/mesosphere_universal_installer_dcos.yml"
+    destination = "/tmp/mesosphere_universal_installer_dcos.yml"
 
-  content = <<EOF
+    content = <<EOF
 ---
 dcos:
   download: "${var.dcos_download_url}"
@@ -105,14 +108,16 @@ dcos:
   version_to_upgrade_from: "${var.dcos_version_to_upgrade_from}"
   enterprise_dcos: ${var.dcos_variant == "ee" ? "true" : "false"}
   config:
-    ${indent(4, var.dcos_config_yml)}
+  ${indent(4, var.dcos_config_yml)}
 EOF
   }
 
-    provisioner "remote-exec" {
-      inline = [
-        "# Workaround for https://github.com/hashicorp/terraform/issues/1178: ${join(",",var.depends_on)}",
-        "sudo docker run -it --rm -v $${SSH_AUTH_SOCK}:/tmp/ssh_auth_sock -e SSH_AUTH_SOCK=/tmp/ssh_auth_sock -v /tmp/mesosphere_universal_installer_dcos.yml:/dcos.yml -v /tmp/mesosphere_universal_installer_inventory:/inventory mesosphere/dcos-ansible-bundle:latest ansible-playbook -i inventory dcos_playbook.yml -e @/dcos.yml -e 'dcos_cluster_name_confirmed=True'"
-      ]
+  provisioner "remote-exec" {
+    inline = [
+      "# wait up to 2 minutes for docker to come up",
+      "declare -i timeout; until sudo docker info >/dev/null 2>&1;do timeout=$timeout+10; test $timeout -gt 120 && exit 1;echo waiting for docker; sleep 10;done",
+      "# Workaround for https://github.com/hashicorp/terraform/issues/1178: ${join(",",var.depends_on)}",
+      "sudo docker run -it --rm -v $${SSH_AUTH_SOCK}:/tmp/ssh_auth_sock -e SSH_AUTH_SOCK=/tmp/ssh_auth_sock -v /tmp/mesosphere_universal_installer_dcos.yml:/dcos.yml -v /tmp/mesosphere_universal_installer_inventory:/inventory ${var.ansible_bundled_container} ansible-playbook -i inventory dcos_playbook.yml -e @/dcos.yml -e 'dcos_cluster_name_confirmed=True'",
+    ]
   }
 }
