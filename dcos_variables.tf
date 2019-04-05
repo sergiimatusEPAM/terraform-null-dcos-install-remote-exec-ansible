@@ -5,7 +5,7 @@ variable "dcos_variant" {
 }
 
 variable "dcos_download_url" {
-  description = "UNDEFINED"
+  description = "Custom DC/OS download URL"
   default = "https://downloads.dcos.io/dcos/stable/dcos_generate_config.sh"
 }
 
@@ -15,10 +15,10 @@ variable "dcos_version" {
 }
 
 variable "dcos_version_to_upgrade_from" {
-  description = "UNDEFINED"
+  description = "explicit version to upgrade from"
   default = "1.12.0"
 }
 
 variable "dcos_config_yml" {
-  description = "UNDEFINED"
+  description = "DC/OS Configuration"
 }
