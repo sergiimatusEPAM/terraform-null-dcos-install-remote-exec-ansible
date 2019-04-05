@@ -22,7 +22,7 @@
  * ```hcl
  *  module "dcos-install" {
  *    source = "dcos-terraform/dcos-install-remote-exec-ansible/null"
- *    version = "~> 0.1.0"
+ *    version = "~> 0.2.0"
  *
  *    bootstrap_ip                = "${module.dcos-infrastructure.bootstrap.public_ip}"
  *    bootstrap_private_ip        = "${module.dcos-infrastructure.bootstrap.private_ip}"
