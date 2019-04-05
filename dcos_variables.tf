@@ -1,5 +1,6 @@
 # Main Variables
 variable "dcos_variant" {
+  description = "Main Variables"
   default = "open"
 }
 
@@ -9,7 +10,7 @@ variable "dcos_download_url" {
 
 variable "dcos_version" {
   default     = "1.12.1"
-  description = "specifies which dcos version instruction to use. Options: `1.9.0`, `1.8.8`, etc. _See [dcos_download_path](https://github.com/dcos/tf_dcos_core/blob/master/download-variables.tf) or [dcos_version](https://github.com/dcos/tf_dcos_core/tree/master/dcos-versions) tree for a full list._"
+  description = "Specifies which DC/OS version instruction to use. Options: 1.12.3, 1.11.10, etc. See dcos_download_path or dcos_version tree for a full list."
 }
 
 variable "dcos_version_to_upgrade_from" {
