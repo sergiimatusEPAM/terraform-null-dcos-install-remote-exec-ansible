@@ -1,4 +1,5 @@
 variable "depends_on" {
+  description = "Modules are missing the depends_on feature. Faking this feature with input and output variables"
   default = []
 }
 
@@ -7,7 +8,7 @@ variable "bootstrap_ip" {
 }
 
 variable "bootstrap_private_ip" {
-  description = "used for the private ip for the bootstrap url"
+  description = "Private IP bootstrap nginx is listening on. Used to build the bootstrap URL."
 }
 
 variable "bootstrap_os_user" {
