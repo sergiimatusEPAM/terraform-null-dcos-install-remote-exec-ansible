@@ -50,12 +50,20 @@ resource "null_resource" "run_ansible_from_bootstrap_node_to_install_dcos" {
     # not be detected.
     bootsrap_instance = "${var.bootstrap_private_ip}"
 
+    bootstrap_ip             = "${var.bootstrap_ip}"
     master_instances         = "${join(",", var.master_private_ips)}"
     private_agents_instances = "${join(",", var.private_agent_private_ips)}"
     public_agents_instances  = "${join(",", var.public_agent_private_ips)}"
 
-    depends_on      = "${join(",",var.depends_on)}"
-    dcos_config_yml = "${var.dcos_config_yml}"
+    dcos_version      = "${var.dcos_version}"
+    dcos_download_url = "${var.dcos_download_url}"
+    dcos_config_yml   = "${var.dcos_config_yml}"
+    dcos_variant      = "${var.dcos_variant}"
+
+    depends_on                = "${join(",",var.depends_on)}"
+    ansible_bundled_container = "${var.ansible_bundled_container}"
+    ansible_additional_config = "${var.ansible_additional_config}"
+    ansible_force_run         = "${var.ansible_force_run ? uuid() : ""}"
   }
 
   connection {

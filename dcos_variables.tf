@@ -1,12 +1,12 @@
 # Main Variables
 variable "dcos_variant" {
   description = "Main Variables"
-  default = "open"
+  default     = "open"
 }
 
 variable "dcos_download_url" {
   description = "Custom DC/OS download URL"
-  default = "https://downloads.dcos.io/dcos/stable/dcos_generate_config.sh"
+  default     = "https://downloads.dcos.io/dcos/stable/dcos_generate_config.sh"
 }
 
 variable "dcos_version" {
@@ -16,7 +16,7 @@ variable "dcos_version" {
 
 variable "dcos_version_to_upgrade_from" {
   description = "explicit version to upgrade from"
-  default = "1.12.0"
+  default     = "1.12.0"
 }
 
 variable "dcos_config_yml" {
