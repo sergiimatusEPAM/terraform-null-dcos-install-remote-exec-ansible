@@ -50,11 +50,11 @@ terraform apply
 | bootstrap\_ip | The bootstrap IP to SSH to | string | n/a | yes |
 | bootstrap\_os\_user | The OS user to be used with ssh exec (only for bootstrap) | string | `"centos"` | no |
 | bootstrap\_private\_ip | Private IP bootstrap nginx is listening on. Used to build the bootstrap URL. | string | n/a | yes |
-| dcos\_config\_yml |  | string | n/a | yes |
-| dcos\_download\_url |  | string | `"https://downloads.dcos.io/dcos/stable/dcos_generate_config.sh"` | no |
+| dcos\_config\_yml | UNDEFINED | string | n/a | yes |
+| dcos\_download\_url | UNDEFINED | string | `"https://downloads.dcos.io/dcos/stable/dcos_generate_config.sh"` | no |
 | dcos\_variant | Main Variables | string | `"open"` | no |
-| dcos\_version | specifies which dcos version instruction to use. Options: `1.9.0`, `1.8.8`, etc. _See [dcos_download_path](https://github.com/dcos/tf_dcos_core/blob/master/download-variables.tf) or [dcos_version](https://github.com/dcos/tf_dcos_core/tree/master/dcos-versions) tree for a full list._ | string | `"1.12.1"` | no |
-| dcos\_version\_to\_upgrade\_from |  | string | `"1.12.0"` | no |
+| dcos\_version | Specifies which DC/OS version instruction to use. Options: 1.12.3, 1.11.10, etc. See dcos_download_path or dcos_version tree for a full list. | string | `"1.12.1"` | no |
+| dcos\_version\_to\_upgrade\_from | UNDEFINED | string | `"1.12.0"` | no |
 | depends\_on | Modules are missing the depends_on feature. Faking this feature with input and output variables | list | `<list>` | no |
 | master\_private\_ips | list of master private ips | list | n/a | yes |
 | private\_agent\_private\_ips | List of private agent IPs to SSH to | list | n/a | yes |
