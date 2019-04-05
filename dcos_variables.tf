@@ -14,7 +14,10 @@ variable "dcos_version" {
 }
 
 variable "dcos_version_to_upgrade_from" {
+  description = "UNDEFINED"
   default = "1.12.0"
 }
 
-variable "dcos_config_yml" {}
+variable "dcos_config_yml" {
+  description = "UNDEFINED"
+}
