@@ -8,7 +8,7 @@ variable "bootstrap_ip" {
 }
 
 variable "bootstrap_private_ip" {
-  description = "Private IP bootstrap nginx is listening on. Used to build the bootstrap URL."
+  description = "used for the private ip for the bootstrap url"
 }
 
 variable "bootstrap_os_user" {
@@ -43,5 +43,5 @@ variable "ansible_additional_config" {
 
 variable "ansible_force_run" {
   default     = false
-  description = "Run ansible on every terraform apply"
+  description = "Run Ansible on every Terraform apply"
 }
