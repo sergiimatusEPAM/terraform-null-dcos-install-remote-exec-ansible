@@ -5,6 +5,7 @@ variable "dcos_variant" {
 }
 
 variable "dcos_download_url" {
+  description = "UNDEFINED"
   default = "https://downloads.dcos.io/dcos/stable/dcos_generate_config.sh"
 }
 
