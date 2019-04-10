@@ -71,6 +71,13 @@ resource "null_resource" "run_ansible_from_bootstrap_node_to_install_dcos" {
     user = "${var.bootstrap_os_user}"
   }
 
+  provisioner "remote-exec" {
+    inline = [
+      "# try to install docker via script if no docker is available, yum specific right now",
+      "which docker || yum install -y docker",
+    ]
+  }
+
   provisioner "file" {
     destination = "/tmp/mesosphere_universal_installer_inventory"
 
