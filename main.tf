@@ -75,6 +75,7 @@ resource "null_resource" "run_ansible_from_bootstrap_node_to_install_dcos" {
     inline = [
       "# try to install docker via script if no docker is available, yum specific right now",
       "which docker || sudo yum install -y docker",
+      "systemctl is-active docker || sudo systemctl start docker",
     ]
   }
 
