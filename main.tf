@@ -74,6 +74,9 @@ resource "null_resource" "run_ansible_from_bootstrap_node_to_install_dcos" {
   provisioner "remote-exec" {
     inline = [
       "#!/usr/bin/env bash",
+      "# disabled firewwalld if present",
+      "systemctl is-enabled firewalld.service | sudo systemctl disable firewalld.service",
+      "systemctl is-active firewalld.service | sudo systemctl stop firewalld.service",
       "# install a may missing cloud-init and start it",
       "which cloud-init || sudo yum install -y cloud-init",
       "sudo cloud-init init",
