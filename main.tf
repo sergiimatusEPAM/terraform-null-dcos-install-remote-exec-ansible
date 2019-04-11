@@ -78,7 +78,7 @@ resource "null_resource" "run_ansible_from_bootstrap_node_to_install_dcos" {
       "which cloud-init || sudo yum install -y cloud-init",
       "systemctl is-enabled cloud-init || sudo systemctl enable cloud-init",
       "systemctl is-active cloud-init || sudo systemctl start cloud-init",
-      "which docker | cloud-init modules --mode final",
+      "which docker | sudo cloud-init modules --mode final",
     ]
   }
 
