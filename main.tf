@@ -48,7 +48,7 @@ resource "null_resource" "run_ansible_from_bootstrap_node_to_install_dcos" {
     # This should really be instance IDs of some sorts,
     # a recycled node (e.g. newly provisioned, but with same IP) would
     # not be detected.
-    bootsrap_instance = "${var.bootstrap_private_ip}"
+    bootstrap_instance = "${var.bootstrap_private_ip}"
 
     bootstrap_ip             = "${var.bootstrap_ip}"
     master_instances         = "${join(",", var.master_private_ips)}"
@@ -74,7 +74,7 @@ resource "null_resource" "run_ansible_from_bootstrap_node_to_install_dcos" {
   provisioner "remote-exec" {
     inline = [
       "# try to install docker via script if no docker is available, yum specific right now",
-      "which docker || yum install -y docker",
+      "which docker || sudo yum install -y docker",
     ]
   }
 
