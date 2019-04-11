@@ -74,13 +74,10 @@ resource "null_resource" "run_ansible_from_bootstrap_node_to_install_dcos" {
   provisioner "remote-exec" {
     inline = [
       "#!/usr/bin/env bash",
-      "echo $PATH",
-      "# try to install docker via script if no docker is available, yum and systemctl specific right now",
-      "which docker || sudo yum install -y docker",
-      "systemctl is-enabled docker || sudo systemctl enable docker",
-      "systemctl is-active docker || sudo systemctl start docker",
-      "# as we do not want to mess around with selinux currently, set it permissive",
-      "if /usr/sbin/getenforce | grep -q -i permissive; then echo 'getenforce already permissive'; else sudo /usr/sbin/setenforce 0; fi",
+      "# install a may missing cloud-init and start it",
+      "which cloud-init || sudo yum install -y cloud-init",
+      "systemctl is-enabled cloud-init || sudo systemctl enable cloud-init",
+      "systemctl is-active cloud-init || sudo systemctl start cloud-init",
     ]
   }
 
