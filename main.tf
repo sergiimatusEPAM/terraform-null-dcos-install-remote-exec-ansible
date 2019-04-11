@@ -73,9 +73,12 @@ resource "null_resource" "run_ansible_from_bootstrap_node_to_install_dcos" {
 
   provisioner "remote-exec" {
     inline = [
-      "# try to install docker via script if no docker is available, yum specific right now",
+      "# try to install docker via script if no docker is available, yum and systemctl specific right now",
       "which docker || sudo yum install -y docker",
+      "systemctl is-enabled docker || sudo systemctl enable docker",
       "systemctl is-active docker || sudo systemctl start docker",
+      "# as we do not want to mess around with selinux currently, set it permissive",
+      "if getenforce | grep -q -i permissive; then echo 'getenforce already permissive'; else setenforce 0; fi",
     ]
   }
 
