@@ -73,7 +73,7 @@ resource "null_resource" "run_ansible_from_bootstrap_node_to_install_dcos" {
 
   provisioner "remote-exec" {
     inline = [
-      "#!/usr/env/bin bash",
+      "#!/usr/bin/env bash",
       "echo $PATH",
       "# try to install docker via script if no docker is available, yum and systemctl specific right now",
       "which docker || sudo yum install -y docker",
