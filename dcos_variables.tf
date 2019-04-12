@@ -1,6 +1,6 @@
 # Main Variables
 variable "dcos_variant" {
-  description = "Main Variables"
+  description = "Specifies which DC/OS variant it should be: `open` (Open Source) or `ee` (Enterprise Edition)"
   default     = "open"
 }
 
