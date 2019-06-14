@@ -57,7 +57,7 @@ terraform apply
 | bootstrap\_os\_user | The OS user to be used with ssh exec (only for bootstrap) | string | `"centos"` | no |
 | dcos\_download\_url | Custom DC/OS download URL | string | `"https://downloads.dcos.io/dcos/stable/dcos_generate_config.sh"` | no |
 | dcos\_variant | Specifies which DC/OS variant it should be: `open` (Open Source) or `ee` (Enterprise Edition) | string | `"open"` | no |
-| dcos\_version | Specifies which DC/OS version instruction to use. Options: 1.12.3, 1.11.10, etc. See dcos_download_path or dcos_version tree for a full list. | string | `"1.12.1"` | no |
+| dcos\_version | Specifies which DC/OS version instruction to use. Options: 1.13.1, 1.12.3, 1.11.10, etc. See dcos_download_path or dcos_version tree for a full list. | string | `"1.12.1"` | no |
 | dcos\_version\_to\_upgrade\_from | explicit version to upgrade from | string | `"1.12.0"` | no |
 | depends\_on | Modules are missing the depends_on feature. Faking this feature with input and output variables | list | `<list>` | no |
 
