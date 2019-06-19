@@ -10,13 +10,13 @@ variable "dcos_download_url" {
 }
 
 variable "dcos_version" {
-  default     = "1.12.1"
+  default     = "1.13.1"
   description = "Specifies which DC/OS version instruction to use. Options: 1.13.1, 1.12.3, 1.11.10, etc. See dcos_download_path or dcos_version tree for a full list."
 }
 
 variable "dcos_version_to_upgrade_from" {
   description = "explicit version to upgrade from"
-  default     = "1.12.0"
+  default     = "1.13.0"
 }
 
 variable "dcos_config_yml" {
