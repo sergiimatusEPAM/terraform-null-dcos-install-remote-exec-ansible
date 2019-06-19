@@ -127,6 +127,7 @@ dcos:
   download: "${var.dcos_download_url}"
   version: "${var.dcos_version}"
   version_to_upgrade_from: "${var.dcos_version_to_upgrade_from}"
+  image_commit: "${var.dcos_image_commit}"
   enterprise_dcos: ${var.dcos_variant == "ee" ? "true" : "false"}
   config:
   ${indent(4, var.dcos_config_yml)}
