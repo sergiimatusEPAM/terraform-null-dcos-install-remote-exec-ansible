@@ -19,6 +19,11 @@ variable "dcos_version_to_upgrade_from" {
   default     = "1.13.0"
 }
 
+variable "dcos_image_commit" {
+  description = "The commit hash for the build of DC/OS"
+  default     = ""
+}
+
 variable "dcos_config_yml" {
   description = "DC/OS Configuration"
 }

@@ -43,6 +43,10 @@
  * ```
  */
 
+locals {
+  dcos_image_commit_flag = "image_commit: '${var.dcos_image_commit}'"
+}
+
 resource "null_resource" "run_ansible_from_bootstrap_node_to_install_dcos" {
   triggers {
     # This should really be instance IDs of some sorts,
@@ -127,6 +131,7 @@ dcos:
   download: "${var.dcos_download_url}"
   version: "${var.dcos_version}"
   version_to_upgrade_from: "${var.dcos_version_to_upgrade_from}"
+  ${var.dcos_image_commit == "" ? "" : "${local.dcos_image_commit_flag}" }
   enterprise_dcos: ${var.dcos_variant == "ee" ? "true" : "false"}
   config:
   ${indent(4, var.dcos_config_yml)}
