@@ -85,7 +85,7 @@ resource "null_resource" "run_ansible_from_bootstrap_node_to_install_dcos" {
       "sudo cloud-init modules --mode config",
       "sudo cloud-init modules --mode final",
       "else",
-      "which yum-config-manager || yum install -y yum-utils",
+      "which yum-config-manager || sudo yum install -y yum-utils",
       "sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo",
       "sudo yum install -y docker-ce",
       "sudo systemctl disable firewalld.service",
