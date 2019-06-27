@@ -75,15 +75,29 @@ resource "null_resource" "run_ansible_from_bootstrap_node_to_install_dcos" {
     user = "${var.bootstrap_os_user}"
   }
 
+  # with a check for the case that we are on Azure checking the metadata url,
+  # as long as cloud-init is not supported on the CentOS and RHEL based azure images
   provisioner "remote-exec" {
     inline = [
       "#!/usr/bin/env bash",
       "# install a may missing cloud-init and start it",
+      "AZURE_METADATA_CHECK=$(curl -s -o /dev/null -w '%{http_code}' -H Metadata:true -fsSL 'http://169.254.169.254/metadata/instance?api-version=2018-10-01&format=json')",
+      "if [[ \"$${AZURE_METADATA_CHECK}\" -ne 200 ]]; then",
       "which cloud-init || sudo yum install -y cloud-init",
       "sudo cloud-init init",
       "sudo cloud-init modules --mode init",
       "sudo cloud-init modules --mode config",
       "sudo cloud-init modules --mode final",
+      "else",
+      "which yum-config-manager || sudo yum install -y yum-utils",
+      "sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo",
+      "sudo yum install -y docker-ce",
+      "sudo systemctl disable firewalld.service",
+      "sudo systemctl stop firewalld.service",
+      "sudo systemctl enable docker.service",
+      "sudo systemctl start --no-block docker.service",
+      "sudo setenforce 0",
+      "fi",
     ]
   }
 
