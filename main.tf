@@ -113,6 +113,12 @@ ${join("\n", var.master_private_ips)}
 ${join("\n", var.private_agent_private_ips)}
 [agents_public]
 ${join("\n", var.public_agent_private_ips)}
+[agents_windows]
+${join("\n", var.private_windows_agent_private_ips)}
+[agents_windows:vars]
+ansible_user=${var.private_windows_agent_username}
+ansible_connection=winrm
+ansible_winrm_server_cert_validation=${var.ansible_winrm_server_cert_validation}
 [bootstraps:vars]
 node_type=bootstrap
 [masters:vars]

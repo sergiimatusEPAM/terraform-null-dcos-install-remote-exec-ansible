@@ -31,6 +31,21 @@ variable "public_agent_private_ips" {
   description = "List of public agent IPs to SSH to"
 }
 
+variable "private_windows_agent_private_ips" {
+  default     = []
+  description = "List of private windows agent IPs to WinRM to"
+}
+
+variable "private_windows_agent_username" {
+  default     = "Administrator"
+  description = "Username for the WinRM connection"
+}
+
+variable "ansible_winrm_server_cert_validation" {
+  default     = "ignore"
+  description = "Validation setting for the target WinRM connection certificate"
+}
+
 variable "ansible_bundled_container" {
   default     = "mesosphere/dcos-ansible-bundle:latest"
   description = "Docker container with bundled dcos-ansible and ansible executables"
