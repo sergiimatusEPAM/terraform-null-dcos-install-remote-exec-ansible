@@ -63,6 +63,7 @@ terraform apply
 | dcos\_version | Specifies which DC/OS version instruction to use. Options: 1.13.1, 1.12.3, 1.11.10, etc. See dcos_download_path or dcos_version tree for a full list. | string | `"1.13.1"` | no |
 | dcos\_version\_to\_upgrade\_from | explicit version to upgrade from | string | `"1.13.0"` | no |
 | depends\_on | Modules are missing the depends_on feature. Faking this feature with input and output variables | list | `<list>` | no |
-| private\_windows\_agent\_private\_ips | List of private windows agent IPs to WinRM to | list | `<list>` | no |
-| private\_windows\_agent\_username | Username for the WinRM connection | string | `"Administrator"` | no |
+| windows\_private\_agent\_passwords | List of private windows agent passwords to be used for WinRM | list | `<list>` | no |
+| windows\_private\_agent\_private\_ips | List of private windows agent IPs to WinRM to | list | `<list>` | no |
+| windows\_private\_agent\_username | Username for the WinRM connection | string | `"Administrator"` | no |
 
