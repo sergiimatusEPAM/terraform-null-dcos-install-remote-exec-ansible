@@ -31,12 +31,17 @@ variable "public_agent_private_ips" {
   description = "List of public agent IPs to SSH to"
 }
 
-variable "private_windows_agent_private_ips" {
+variable "windows_private_agent_private_ips" {
   default     = []
   description = "List of private windows agent IPs to WinRM to"
 }
 
-variable "private_windows_agent_username" {
+variable "windows_private_agent_passwords" {
+  default     = []
+  description = "List of private windows agent passwords to be used for WinRM"
+}
+
+variable "windows_private_agent_username" {
   default     = "Administrator"
   description = "Username for the WinRM connection"
 }
