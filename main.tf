@@ -118,6 +118,7 @@ ${join("\n", var.private_windows_agent_private_ips)}
 [agents_windows:vars]
 ansible_user=${var.private_windows_agent_username}
 ansible_connection=winrm
+ansible_winrm_transport=${var.ansible_winrm_transport}
 ansible_winrm_server_cert_validation=${var.ansible_winrm_server_cert_validation}
 [bootstraps:vars]
 node_type=bootstrap
