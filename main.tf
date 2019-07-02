@@ -114,7 +114,7 @@ ${join("\n", var.private_agent_private_ips)}
 [agents_public]
 ${join("\n", var.public_agent_private_ips)}
 [agents_windows]
-${join("\n", var.windows_private_agent_private_ips)}
+${join("\n", formatlist("%s ansible_password=%s", var.windows_private_agent_private_ips, var.windows_private_agent_passwords))}
 [agents_windows:vars]
 ansible_user=${var.windows_private_agent_username}
 ansible_connection=winrm
@@ -134,6 +134,7 @@ dcos_legacy_node_type_name=slave_public
 [agents:children]
 agents_private
 agents_public
+agents_windows
 [dcos:children]
 bootstraps
 masters
