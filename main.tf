@@ -54,10 +54,11 @@ resource "null_resource" "run_ansible_from_bootstrap_node_to_install_dcos" {
     # not be detected.
     bootstrap_instance = "${var.bootstrap_private_ip}"
 
-    bootstrap_ip             = "${var.bootstrap_ip}"
-    master_instances         = "${join(",", var.master_private_ips)}"
-    private_agents_instances = "${join(",", var.private_agent_private_ips)}"
-    public_agents_instances  = "${join(",", var.public_agent_private_ips)}"
+    bootstrap_ip                      = "${var.bootstrap_ip}"
+    master_instances                  = "${join(",", var.master_private_ips)}"
+    private_agents_instances          = "${join(",", var.private_agent_private_ips)}"
+    public_agents_instances           = "${join(",", var.public_agent_private_ips)}"
+    windows_private_agent_private_ips = "${join(",", var.windows_private_agent_private_ips)}"
 
     dcos_version      = "${var.dcos_version}"
     dcos_download_url = "${var.dcos_download_url}"
