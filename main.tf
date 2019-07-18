@@ -78,27 +78,15 @@ resource "null_resource" "run_ansible_from_bootstrap_node_to_install_dcos" {
 
   # with a check for the case that we are on Azure checking the metadata url,
   # as long as cloud-init is not supported on the CentOS and RHEL based azure images
+  provisioner "file" {
+    destination = "/tmp/bootstrap-docker-install.sh"
+
+    content = "${file("${path.module}/bootstrap-docker-install.sh")}"
+  }
+
   provisioner "remote-exec" {
     inline = [
-      "#!/usr/bin/env bash",
-      "# install a may missing cloud-init and start it",
-      "AZURE_METADATA_CHECK=$(curl -s -o /dev/null -w '%{http_code}' -H Metadata:true -fsSL 'http://169.254.169.254/metadata/instance?api-version=2018-10-01&format=json')",
-      "if [[ \"$${AZURE_METADATA_CHECK}\" -ne 200 ]]; then",
-      "which cloud-init || sudo yum install -y cloud-init",
-      "sudo cloud-init init",
-      "sudo cloud-init modules --mode init",
-      "sudo cloud-init modules --mode config",
-      "sudo cloud-init modules --mode final",
-      "else",
-      "which yum-config-manager || sudo yum install -y yum-utils",
-      "sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo",
-      "sudo yum install -y docker-ce",
-      "sudo systemctl disable firewalld.service",
-      "sudo systemctl stop firewalld.service",
-      "sudo systemctl enable docker.service",
-      "sudo systemctl start --no-block docker.service",
-      "sudo setenforce 0",
-      "fi",
+      "bash -x /tmp/bootstrap-docker-install.sh",
     ]
   }
 
@@ -166,7 +154,7 @@ EOF
       "declare -i timeout; until sudo docker info >/dev/null 2>&1;do timeout=$timeout+10; test $timeout -gt 120 && exit 1;echo waiting for docker; sleep 10;done",
       "# Workaround for https://github.com/hashicorp/terraform/issues/1178: ${join(",",var.depends_on)}",
       "sudo docker pull ${var.ansible_bundled_container}",
-      "sudo docker run --network=host -it --rm -v $${SSH_AUTH_SOCK}:/tmp/ssh_auth_sock -e SSH_AUTH_SOCK=/tmp/ssh_auth_sock -v /tmp/mesosphere_universal_installer_dcos.yml:/dcos.yml -v /tmp/mesosphere_universal_installer_inventory:/inventory ${var.ansible_bundled_container} ansible-playbook -i inventory dcos_playbook.yml -e @/dcos.yml -e 'dcos_cluster_name_confirmed=True'",
+      "sudo docker run --network=host -it --rm -v $${SSH_AUTH_SOCK}:/tmp/ssh_auth_sock -e SSH_AUTH_SOCK=/tmp/ssh_auth_sock -v /tmp/mesosphere_universal_installer_dcos.yml:/dcos.yml -v /tmp/mesosphere_universal_installer_inventory:/inventory ${var.ansible_bundled_container} ansible-playbook -i inventory dcos_playbook.yml -e @/dcos.yml -e 'dcos_cluster_name_confirmed=True' -u ${var.bootstrap_os_user}",
     ]
   }
 }
