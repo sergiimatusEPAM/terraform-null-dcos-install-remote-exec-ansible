@@ -15,14 +15,17 @@ if ! [ -x "$(command -v docker)" ]; then
   rhel*)
     extrasrepo=$(cat /etc/yum.repos.d/redhat* | grep -E '^\[.*extras.*\]$' | grep -vE 'debug|source' | tr -d '[|]')
     sudo yum install -y --enablerepo $extrasrepo docker
+    sudo systemctl daemon-reload
     sudo systemctl enable docker.service
     sudo systemctl start docker.service
     sudo setenforce 0
     ;;
   *)
     echo "installing docker"
+    which yum-config-manager || sudo yum install -y yum-utils
     sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
     sudo yum install -y docker-ce
+    sudo systemctl daemon-reload
     sudo systemctl disable firewalld.service
     sudo systemctl stop firewalld.service
     sudo systemctl enable docker.service
