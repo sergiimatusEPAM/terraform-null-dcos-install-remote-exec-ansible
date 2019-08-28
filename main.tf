@@ -76,12 +76,9 @@ resource "null_resource" "run_ansible_from_bootstrap_node_to_install_dcos" {
     user = "${var.bootstrap_os_user}"
   }
 
-  # with a check for the case that we are on Azure checking the metadata url,
-  # as long as cloud-init is not supported on the CentOS and RHEL based azure images
   provisioner "file" {
     destination = "/tmp/bootstrap-docker-install.sh"
-
-    content = "${file("${path.module}/bootstrap-docker-install.sh")}"
+    content     = "${file("${path.module}/bootstrap-docker-install.sh")}"
   }
 
   provisioner "remote-exec" {
@@ -150,8 +147,6 @@ EOF
 
   provisioner "remote-exec" {
     inline = [
-      "# wait up to 2 minutes for docker to come up",
-      "declare -i timeout; until sudo docker info >/dev/null 2>&1;do timeout=$timeout+10; test $timeout -gt 120 && exit 1;echo waiting for docker; sleep 10;done",
       "# Workaround for https://github.com/hashicorp/terraform/issues/1178: ${join(",",var.depends_on)}",
       "# Sometimes docker pull seems to fail. Lets retry 5 times before failing.",
       "declare -i times; until sudo docker pull ${var.ansible_bundled_container};do times=$times+1; test $times -gt 5 && exit 1;echo retrying pull; sleep 10;done",

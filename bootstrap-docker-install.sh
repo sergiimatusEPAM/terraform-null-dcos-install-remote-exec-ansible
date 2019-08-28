@@ -9,8 +9,8 @@ else
     OS="$(uname -s)-$(uname -r)"
 fi
 
-echo "checking docker executable"
 if ! [ -x "$(command -v docker)" ]; then
+  echo "installing docker"
   case $OS in
   rhel*)
     extrasrepo=$(cat /etc/yum.repos.d/redhat* | grep -E '^\[.*extras.*\]$' | grep -vE 'debug|source' | tr -d '[|]')
@@ -21,7 +21,6 @@ if ! [ -x "$(command -v docker)" ]; then
     sudo setenforce 0
     ;;
   *)
-    echo "installing docker"
     which yum-config-manager || sudo yum install -y yum-utils
     sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
     sudo yum install -y docker-ce
@@ -33,19 +32,14 @@ if ! [ -x "$(command -v docker)" ]; then
     sudo setenforce 0
     ;;
   esac
-  echo "sleep 30s to let docker become ready"
-  sleep 30
 fi
 
-echo "checking dockerd connection"
-until sudo docker info; do
-  echo "docker info returned error"
+until sudo docker info >/dev/null 2>&1; do
   if sudo systemctl is-active docker.service >/dev/null; then
     sudo systemctl start docker.service
-    sleep 60
     continue
   fi
-  echo "docker running but not yet responging. Sleeping 60s..."
-  sleep 60
+  echo "docker running but not yet responding. Sleeping 10s..."
+  sleep 10
 done
 echo "docker is running"
