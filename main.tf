@@ -44,7 +44,8 @@
  */
 
 locals {
-  dcos_image_commit_flag = "image_commit: '${var.dcos_image_commit}'"
+  dcos_image_commit_flag     = "image_commit: '${var.dcos_image_commit}'"
+  dcos_download_url_checksum = "download_checksum: 'sha256:${var.dcos_download_url_checksum}'"
 }
 
 resource "null_resource" "run_ansible_from_bootstrap_node_to_install_dcos" {
@@ -151,6 +152,7 @@ EOF
 ${var.ansible_additional_config}
 dcos:
   download: "${var.dcos_download_url}"
+  ${var.dcos_download_url_checksum == "" ? "" : "${local.dcos_download_url_checksum}" }
   version: "${var.dcos_version}"
   version_to_upgrade_from: "${var.dcos_version_to_upgrade_from}"
   ${var.dcos_image_commit == "" ? "" : "${local.dcos_image_commit_flag}" }
