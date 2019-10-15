@@ -20,6 +20,8 @@ if ! [ -x "$(command -v docker)" ]; then
       sudo yum install -y docker
     fi
     sudo systemctl daemon-reload
+    sudo systemctl disable firewalld.service
+    sudo systemctl stop firewalld.service
     sudo systemctl enable docker.service
     sudo systemctl start docker.service
     sudo setenforce 0
