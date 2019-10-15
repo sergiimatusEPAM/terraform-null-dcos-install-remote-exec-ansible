@@ -14,7 +14,11 @@ if ! [ -x "$(command -v docker)" ]; then
   case $OS in
   rhel*)
     extrasrepo=$(cat /etc/yum.repos.d/redhat* | grep -E '^\[.*extras.*\]$' | grep -vE 'debug|source' | tr -d '[|]')
-    sudo yum install -y --enablerepo $extrasrepo docker
+    if ! [ -z ${extrasrepo} ]; then
+      sudo yum install -y --enablerepo $extrasrepo docker
+    else
+      sudo yum install -y docker
+    fi
     sudo systemctl daemon-reload
     sudo systemctl enable docker.service
     sudo systemctl start docker.service
