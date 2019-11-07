@@ -61,8 +61,8 @@ terraform apply
 | dcos\_download\_url\_checksum | Custom DC/OS download URL SHA256 Checksum. Empty string omits checking. | string | `""` | no |
 | dcos\_image\_commit | The commit hash for the build of DC/OS | string | `""` | no |
 | dcos\_variant | Specifies which DC/OS variant it should be: `open` (Open Source) or `ee` (Enterprise Edition) | string | `"open"` | no |
-| dcos\_version | Specifies which DC/OS version instruction to use. Options: 1.13.5, 1.12.4, 1.11.11, etc. See dcos_download_path or dcos_version tree for a full list. | string | `"1.13.5"` | no |
-| dcos\_version\_to\_upgrade\_from | explicit version to upgrade from | string | `"1.13.0"` | no |
+| dcos\_version | Specifies which DC/OS version instruction to use. Options: 2.0.0, 1.13.6, 1.12.4, 1.11.12, etc. See dcos_download_path or dcos_version tree for a full list. | string | `"2.0.0"` | no |
+| dcos\_version\_to\_upgrade\_from | explicit version to upgrade from | string | `"2.0.0"` | no |
 | depends\_on | Modules are missing the depends_on feature. Faking this feature with input and output variables | list | `<list>` | no |
 | windows\_private\_agent\_passwords | List of private windows agent passwords to be used for WinRM | list | `<list>` | no |
 | windows\_private\_agent\_private\_ips | List of private windows agent IPs to WinRM to | list | `<list>` | no |

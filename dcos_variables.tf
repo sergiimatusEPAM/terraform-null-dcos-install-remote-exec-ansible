@@ -15,13 +15,13 @@ variable "dcos_download_url_checksum" {
 }
 
 variable "dcos_version" {
-  default     = "1.13.5"
-  description = "Specifies which DC/OS version instruction to use. Options: 1.13.5, 1.12.4, 1.11.11, etc. See dcos_download_path or dcos_version tree for a full list."
+  default     = "2.0.0"
+  description = "Specifies which DC/OS version instruction to use. Options: 2.0.0, 1.13.6, 1.12.4, 1.11.12, etc. See dcos_download_path or dcos_version tree for a full list."
 }
 
 variable "dcos_version_to_upgrade_from" {
   description = "explicit version to upgrade from"
-  default     = "1.13.0"
+  default     = "2.0.0"
 }
 
 variable "dcos_image_commit" {
