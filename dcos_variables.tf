@@ -32,3 +32,13 @@ variable "dcos_image_commit" {
 variable "dcos_config_yml" {
   description = "DC/OS Configuration"
 }
+
+variable "dcos_download_win_url" {
+  description = "Custom DC/OS Windows installer URL"
+  default     = "https://downloads.dcos.io/dcos/testing/master/windows/dcos_generate_config_win.sh"
+}
+
+variable "dcos_download_win_url_checksum" {
+  description = "Custom DC/OS Windows installer URL SHA256 Checksum. Empty string omits checking"
+  default     = ""
+}

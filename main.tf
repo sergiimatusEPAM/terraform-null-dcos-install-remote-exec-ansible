@@ -44,8 +44,10 @@
  */
 
 locals {
-  dcos_image_commit_flag     = "image_commit: '${var.dcos_image_commit}'"
-  dcos_download_url_checksum = "download_checksum: 'sha256:${var.dcos_download_url_checksum}'"
+  dcos_image_commit_flag         = "image_commit: '${var.dcos_image_commit}'"
+  dcos_download_url_checksum     = "download_checksum: 'sha256:${var.dcos_download_url_checksum}'"
+  dcos_download_win_url          = "download_win: \"${var.dcos_download_win_url}\""
+  dcos_download_win_url_checksum = "download_win_checksum: \"${var.dcos_download_win_url_checksum}\""
 }
 
 resource "null_resource" "run_ansible_from_bootstrap_node_to_install_dcos" {
@@ -55,11 +57,11 @@ resource "null_resource" "run_ansible_from_bootstrap_node_to_install_dcos" {
     # not be detected.
     bootstrap_instance = "${var.bootstrap_private_ip}"
 
-    bootstrap_ip                      = "${var.bootstrap_ip}"
-    master_instances                  = "${join(",", var.master_private_ips)}"
-    private_agents_instances          = "${join(",", var.private_agent_private_ips)}"
-    public_agents_instances           = "${join(",", var.public_agent_private_ips)}"
-    windows_private_agent_private_ips = "${join(",", var.windows_private_agent_private_ips)}"
+    bootstrap_ip                    = "${var.bootstrap_ip}"
+    master_instances                = "${join(",", var.master_private_ips)}"
+    private_agents_instances        = "${join(",", var.private_agent_private_ips)}"
+    public_agents_instances         = "${join(",", var.public_agent_private_ips)}"
+    windows_private_agent_instances = "${join(",", var.windows_private_agent_private_ips)}"
 
     dcos_version      = "${var.dcos_version}"
     dcos_download_url = "${var.dcos_download_url}"
@@ -138,6 +140,8 @@ ${var.ansible_additional_config}
 dcos:
   download: "${var.dcos_download_url}"
   ${var.dcos_download_url_checksum == "" ? "" : "${local.dcos_download_url_checksum}" }
+  ${"${join(",", var.windows_private_agent_private_ips)}" == "" ? "" : "${local.dcos_download_win_url}" }
+  ${var.dcos_download_win_url_checksum == "" ? "" : "${local.dcos_download_win_url_checksum}" }
   version: "${var.dcos_version}"
   version_to_upgrade_from: "${var.dcos_version_to_upgrade_from}"
   ${var.dcos_image_commit == "" ? "" : "${local.dcos_image_commit_flag}" }
