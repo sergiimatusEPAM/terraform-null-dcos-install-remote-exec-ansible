@@ -140,8 +140,6 @@ ${var.ansible_additional_config}
 dcos:
   download: "${var.dcos_download_url}"
   ${var.dcos_download_url_checksum == "" ? "" : "${local.dcos_download_url_checksum}" }
-  ${"${join(",", var.windows_private_agent_private_ips)}" == "" ? "" : "${local.dcos_download_win_url}" }
-  ${var.dcos_download_win_url_checksum == "" ? "" : "${local.dcos_download_win_url_checksum}" }
   version: "${var.dcos_version}"
   version_to_upgrade_from: "${var.dcos_version_to_upgrade_from}"
   ${var.dcos_image_commit == "" ? "" : "${local.dcos_image_commit_flag}" }
